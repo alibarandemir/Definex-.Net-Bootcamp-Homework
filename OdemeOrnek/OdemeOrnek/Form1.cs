@@ -4,7 +4,7 @@ namespace OdemeOrnek
 {
     public partial class Form1 : Form
     {
-        public string logTipi = "";
+        
         public string odemeTipi = "";
         public string mesaj = "";
         public ILogger logger;
@@ -15,45 +15,29 @@ namespace OdemeOrnek
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //if(odemeTipi =="Nakit")
-            //{
-            //    XmLog xmLog = new XmLog();
-            //    mesaj = xmLog.logYaz(textBox1.Text);
-            //    lblSonuc.Text = mesaj;
-            //}
-            //else if (logTipi == "Kredi")
-            //{
-            //    DbLog dbLog = new DbLog();
-            //    mesaj = dbLog.logYaz(textBox1.Text);
-            //    lblSonuc.Text = mesaj;
-            //}
-            //else if (logTipi = "Kripto")
-            //{
-
-            //}
+        
             try
             {
-                string className = "OdemeOrnek." + odemeTipi + "Odeme"; // Ödeme tipine göre sýnýf adý oluþturuluyor
+                string className = "OdemeOrnek." + odemeTipi + "Odeme"; // ï¿½deme tipine gï¿½re sï¿½nï¿½f adï¿½ oluï¿½turuluyor
                 Type type = Type.GetType(className);
 
                 if (type != null)
                 {
                     object instance = Activator.CreateInstance(type);
-                    ILogger logger = instance as ILogger;
-
-                    if (logger != null)
+                    IOdeme odeme = instance;
+                    if (odeme != null)
                     {
-                        mesaj = logger.logYaz(textBox1.Text);
+                        mesaj = odeme.odemeYap(textBox1.Text);
                         lblSonuc.Text = mesaj;
                     }
                     else
                     {
-                        lblSonuc.Text = "Hatalý log sýnýfý!";
+                        lblSonuc.Text = "Hatalï¿½ log sï¿½nï¿½fï¿½!";
                     }
                 }
                 else
                 {
-                    lblSonuc.Text = "Bilinmeyen ödeme tipi!";
+                    lblSonuc.Text = "Bilinmeyen ï¿½deme tipi!";
                 }
             }
             catch (Exception ex)
